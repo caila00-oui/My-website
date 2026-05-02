@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caila — Author & Literary Writer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #1a1410;
+      --parchment:  #f7f2e8;
+      --cream:      #faf7f0;
+      --gold:       #b8922a;
+      --gold-lt:    #d4a843;
+      --brown:      #3d2b1f;
+      --brown-md:   #5c3d2e;
+      --brown-lt:   #8b6347;
+      --sepia:      #c4a882;
+      --sepia-lt:   #e8d5b7;
+      --rule:       rgba(180,140,90,0.3);
+      --shadow:     rgba(30,15,5,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--parchment);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(247,242,232,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-brand {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brown);
+      font-weight: 300;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--brown-md);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+    }
+
+    .hero-ornament {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-ornament::before,
+    .hero-ornament::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--brown);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--brown-md);
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--brown-lt);
+      margin-top: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .hero-scroll {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sepia);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 4rem;
+      transition: color 0.25s;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: var(--sepia);
+      opacity: 0.5;
+    }
+
+    .hero-scroll:hover { color: var(--gold); }
+
+    /* ── SECTION WRAPPER ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .container-wide {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── SECTION HEADING ── */
+    .section-head {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-label::before,
+    .section-label::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--brown);
+      line-height: 1.2;
+    }
+
+    .section-title em { font-style: italic; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 6rem 0;
+      color: var(--sepia);
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .divider-ornament {
+      font-size: 1.2rem;
+      color: var(--sepia);
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 8rem 0;
+      background: var(--cream);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-portrait {
+      position: sticky;
+      top: 7rem;
+    }
+
+    .portrait-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--sepia-lt);
+      border: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portrait-frame::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid var(--rule);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .portrait-placeholder {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--brown-lt);
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(20%) contrast(1.05);
+    }
+
+    .portrait-caption {
+      margin-top: 1rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brown-lt);
+      text-align: center;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      color: var(--brown);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p:first-child::first-letter {
+      font-family: 'Playfair Display', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      margin: 0.1em 0.1em 0 0;
+      color: var(--brown-md);
+      font-weight: 400;
+    }
+
+    /* ── QUOTE ── */
+    #quote {
+      padding: 8rem 0;
+    }
+
+    blockquote {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    blockquote p {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--brown);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    blockquote cite {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* ── BOOKS ── */
+    #books {
+      padding: 8rem 0;
+      background: var(--cream);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 3rem;
+    }
+
+    .book-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .book-cover {
+      width: 100%;
+      aspect-ratio: 2/3;
+      background: var(--brown);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--rule);
+    }
+
+    .book-cover-inner {
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(200,160,80,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .book-cover-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      color: var(--sepia-lt);
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+
+    .book-cover-author {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sepia);
+    }
+
+    .book-cover-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+      margin: 1rem auto;
+    }
+
+    .book-info {}
+
+    .book-genre {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .book-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--brown);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .book-desc {
+      font-size: 0.95rem;
+      color: var(--brown-md);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .book-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: auto;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: inline-block;
+      background: transparent;
+    }
+
+    .btn-primary {
+      border-color: var(--brown);
+      color: var(--brown);
+    }
+
+    .btn-primary:hover {
+      background: var(--brown);
+      color: var(--cream);
+    }
+
+    .btn-secondary {
+      border-color: var(--rule);
+      color: var(--brown-lt);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--brown-lt);
+      color: var(--brown);
+    }
+
+    /* ── MODAL (PDF reader) ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(20,12,5,0.85);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--brown);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--brown-lt);
+      cursor: pointer;
+      line-height: 1;
+      padding: 0.2rem 0.5rem;
+    }
+
+    .modal-close:hover { color: var(--brown); }
+
+    .modal-body {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      border: none;
+      display: block;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 8rem 0;
+    }
+
+    .contact-inner {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .contact-inner p {
+      font-size: 1.05rem;
+      color: var(--brown-md);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-email {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 0.2rem;
+      transition: border-color 0.25s;
+    }
+
+    .contact-email:hover { border-color: var(--gold); color: var(--gold); }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+      list-style: none;
+    }
+
+    .social-links a {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--brown-lt);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .social-links a:hover { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2.5rem;
+      text-align: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--sepia);
+    }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 720px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-portrait { position: static; max-width: 260px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#">Caila</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#books">Works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-ornament">Literary Works</div>
+    <h1>Caila<br><em>Noviana</em></h1>
+    <p class="hero-subtitle">Author &amp; Literary Writer</p>
+    <a class="hero-scroll" href="#about">Scroll</a>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container-wide">
+      <div class="about-grid">
+
+        <div class="about-portrait reveal">
+          <div class="portrait-frame">
+            <!-- Replace src with your actual photo path -->
+            <!-- <img src="photo.jpg" alt="Caila Noviana" /> -->
+            <p class="portrait-placeholder">Place your<br>portrait here<br><br><em>photo.jpg</em></p>
+          </div>
+          <p class="portrait-caption">Caila Noviana</p>
+        </div>
+
+        <div class="about-text reveal">
+          <div class="section-head" style="text-align:left; margin-bottom:2rem;">
+            <div class="section-label" style="justify-content:flex-start;">About</div>
+            <h2 class="section-title">A writer lives<br><em>a thousand lives.</em></h2>
+          </div>
+          <p>
+            Born from a deep love of language and the human condition, I write to explore the spaces between words — those silences that hold more truth than any sentence can contain.
+          </p>
+          <p>
+            My work draws from literature, philosophy, and the quiet observations of everyday life. Each book is an attempt to understand what it means to be fully, vulnerably human.
+          </p>
+          <p>
+            When I am not writing, I am reading — immersed in the great voices that shaped the literary tradition I hope, in my own small way, to continue.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section id="quote">
+    <div class="container">
+      <blockquote class="reveal">
+        <p>"Pain and suffering are always inevitable for a large intelligence and a deep heart."</p>
+        <cite>— Fyodor Dostoevsky</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <div class="divider container-wide"><span class="divider-ornament">✦</span></div>
+
+  <!-- BOOKS -->
+  <section id="books">
+    <div class="container-wide">
+      <div class="section-head reveal">
+        <div class="section-label">Works</div>
+        <h2 class="section-title">Published <em>E-Books</em></h2>
+      </div>
+
+      <div class="books-grid">
+
+        <!-- BOOK 1 -->
+        <div class="book-card reveal">
+          <div class="book-cover">
+            <div class="book-cover-inner">
+              <p class="book-cover-title">Shadows of the Inner Room</p>
+              <div class="book-cover-line"></div>
+              <p class="book-cover-author">Caila Noviana</p>
+            </div>
+          </div>
+          <div class="book-info">
+            <p class="book-genre">Literary Fiction</p>
+            <h3 class="book-title">Shadows of the Inner Room</h3>
+            <p class="book-desc">A meditation on memory and solitude — where the past refuses to stay buried and the present trembles under its weight.</p>
+            <div class="book-actions">
+              <!-- Replace # with your Google Drive preview link -->
+              <a class="btn btn-primary" href="#" onclick="openReader('Shadows of the Inner Room', 'YOUR_GOOGLE_DRIVE_PREVIEW_LINK'); return false;">Read Online</a>
+              <!-- Replace # with your PDF download link -->
+              <a class="btn btn-secondary" href="#" download>Download PDF</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOOK 2 -->
+        <div class="book-card reveal">
+          <div class="book-cover" style="background:#2b1e14;">
+            <div class="book-cover-inner">
+              <p class="book-cover-title">Letters Never Sent</p>
+              <div class="book-cover-line"></div>
+              <p class="book-cover-author">Caila Noviana</p>
+            </div>
+          </div>
+          <div class="book-info">
+            <p class="book-genre">Epistolary Novel</p>
+            <h3 class="book-title">Letters Never Sent</h3>
+            <p class="book-desc">Forty-three unsent letters spanning two decades. A story of love, regret, and the words we cannot bring ourselves to speak aloud.</p>
+            <div class="book-actions">
+              <a class="btn btn-primary" href="#" onclick="openReader('Letters Never Sent', 'YOUR_GOOGLE_DRIVE_PREVIEW_LINK'); return false;">Read Online</a>
+              <a class="btn btn-secondary" href="#" download>Download PDF</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOOK 3 -->
+        <div class="book-card reveal">
+          <div class="book-cover" style="background:#4a3728;">
+            <div class="book-cover-inner">
+              <p class="book-cover-title">The Weight of Small Things</p>
+              <div class="book-cover-line"></div>
+              <p class="book-cover-author">Caila Noviana</p>
+            </div>
+          </div>
+          <div class="book-info">
+            <p class="book-genre">Short Stories</p>
+            <h3 class="book-title">The Weight of Small Things</h3>
+            <p class="book-desc">A collection of twelve stories — quiet, precise, and devastating in the way only ordinary life can be.</p>
+            <div class="book-actions">
+              <a class="btn btn-primary" href="#" onclick="openReader('The Weight of Small Things', 'YOUR_GOOGLE_DRIVE_PREVIEW_LINK'); return false;">Read Online</a>
+              <a class="btn btn-secondary" href="#" download>Download PDF</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label">Contact</div>
+        <h2 class="section-title"><em>Get in Touch</em></h2>
+      </div>
+      <div class="contact-inner reveal">
+        <p>For literary inquiries, collaborations, or simply to share your thoughts on the work — I would be glad to hear from you.</p>
+        <!-- Replace with your actual email -->
+        <a class="contact-email" href="mailto:your@email.com">your@email.com</a>
+
+        <ul class="social-links">
+          <!-- Replace # with your actual links -->
+          <li><a href="#" target="_blank">Instagram</a></li>
+          <li><a href="#" target="_blank">Goodreads</a></li>
+          <li><a href="#" target="_blank">Twitter / X</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Caila Noviana. All rights reserved.</p>
+  </footer>
+
+  <!-- PDF READER MODAL -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title">Book Title</span>
+        <button class="modal-close" onclick="closeReader()">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="modal-frame" src="" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // PDF modal
+    function openReader(title, src) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-frame').src = src;
+      document.getElementById('modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeReader() {
+      document.getElementById('modal').classList.remove('open');
+      document.getElementById('modal-frame').src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) closeReader();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeReader();
+    });
+  </script>
+</body>
+</html>
